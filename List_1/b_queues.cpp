@@ -51,8 +51,29 @@ class ListaLigada : public Lista<E> {
         };
         
         // Atributos de controle da lista
-        
+        No* cabeca; // Ponteiro para o primeiro nó da lista
+        No* cauda;  // Ponteiro para o último nó da lista
+        No* atual;  // Ponteiro para o nó atual (cursor)
+        int tamanhoLista; // Tamanho da lista
 
+        // Método pra inicializar a lista (usado no construtor e no limpar)
+        void init() {
+            cabeca = new No(E(), nullptr); // Cria o nó sentinela (dummy). Ele não guarda dado útil.
+            cauda = cabeca;  // No início, cabeça e cauda são o mesmo
+            atual = cabeca; // Cursor também
+            tamanhoLista = 0;
+        }
+
+        // Método auxiliar para deletar tudo (sem deletar a cabeça, usado no limpar)
+        void removerTodos() {
+            while(cabeca->proximo != nullptr) {
+                atual = cabeca->proximo;          // Pega o primeiro 
+                cabeca->proximo = atual->proximo; // Pula ele
+                delete atual;                     // Deleta
+            }
+            atual = cauda = cabeca; // Reseta ponteiros
+            tamanhoLista = 0;
+        }
 
         public:
 
