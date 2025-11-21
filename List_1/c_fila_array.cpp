@@ -83,12 +83,13 @@ int main(){
     string direcao_carro, lado_balsa;
     bool preencheu;
 
+    cin >> qtd_testes;
     for (int i = 0; i < qtd_testes; i++){    // Laço pras quantidades de casos
         cin >> tamanho_balsa >> qtd_carros;
         tamanho_balsa = tamanho_balsa * 100; // Transforma em centimetros
 
-        Fila<int>* carros = new Fila_Array<int>();          // Fila para armazenar os tamanhos dos carros
-        Fila<string>* direcoes = new Fila_Array<string>();  // Fila para armazenar as direcoes dos carros
+        Fila<int>* carros = new Fila_Array<int>(qtd_carros);          // Fila para armazenar os tamanhos dos carros
+        Fila<string>* direcoes = new Fila_Array<string>(qtd_carros);  // Fila para armazenar as direcoes dos carros
 
         for (int j = 0; j < qtd_carros; j++){
             cin >> tamanho_carro >> direcao_carro;
@@ -105,17 +106,21 @@ int main(){
                     qtd_atravessadas++;
                     lado_balsa = "right";
                 }
-                if (direcoes->valorAtual() == "right" && preenchimento_balsa > 0){  // Se o primeiro carro da fila tiver na direita e a balsa ja com algum carro, a balsa vai pro outro lado
+                else if (direcoes->valorAtual() == "right" && preenchimento_balsa > 0){  // Se o primeiro carro da fila tiver na direita e a balsa ja com algum carro, a balsa vai pro outro lado
                     preenchimento_balsa = 0;  // Balsa foi "descarregada" ao ir pro outro lado
                     qtd_atravessadas++;
                     lado_balsa = "right";
                 }
-                if (direcoes->valorAtual() == "left" && (carros->valorAtual() + preenchimento_balsa) <= tamanho_balsa){ // Se o carro couber, ele entra na balsa e é removido da fila
+                else if (direcoes->valorAtual() == "left" && (carros->valorAtual() + preenchimento_balsa) <= tamanho_balsa){ // Se o carro couber, ele entra na balsa e é removido da fila
                     preenchimento_balsa += carros->valorAtual();                        
                     carros->desenfileirar();
                     direcoes->desenfileirar();
+
+                    if (carros->tamanho() == 0){ // Se não tiver mais carros, a balsa atravessa
+                        qtd_atravessadas++;
+                    }
                 }
-                if (direcoes->valorAtual() == "left" && (carros->valorAtual() + preenchimento_balsa) > tamanho_balsa){ // Se o carro não couber, a balsa preencheu e atravessa
+                else if (direcoes->valorAtual() == "left" && (carros->valorAtual() + preenchimento_balsa) > tamanho_balsa){ // Se o carro não couber, a balsa preencheu e atravessa
                     preenchimento_balsa = 0;  // Balsa foi "descarregada" ao ir pro outro lado
                     qtd_atravessadas++;
                     lado_balsa = "right";
@@ -125,17 +130,21 @@ int main(){
                     qtd_atravessadas++;
                     lado_balsa = "left";
                 }
-                if (direcoes->valorAtual() == "left" && preenchimento_balsa > 0){  // Se o primeiro carro da fila tiver na direita e a balsa ja com algum carro, a balsa vai pro outro lado
+                else if (direcoes->valorAtual() == "left" && preenchimento_balsa > 0){  // Se o primeiro carro da fila tiver na direita e a balsa ja com algum carro, a balsa vai pro outro lado
                     preenchimento_balsa = 0;  // Balsa foi "descarregada" ao ir pro outro lado
                     qtd_atravessadas++;
                     lado_balsa = "left";
                 }
-                if (direcoes->valorAtual() == "right" && (carros->valorAtual() + preenchimento_balsa) <= tamanho_balsa){ // Se o carro couber, ele entra na balsa e é removido da fila
+                else if (direcoes->valorAtual() == "right" && (carros->valorAtual() + preenchimento_balsa) <= tamanho_balsa){ // Se o carro couber, ele entra na balsa e é removido da fila
                     preenchimento_balsa += carros->valorAtual();                        
                     carros->desenfileirar();
                     direcoes->desenfileirar();
+
+                    if (carros->tamanho() == 0){ // Se não tiver mais carros, a balsa atravessa
+                        qtd_atravessadas++;
+                    }
                 }
-                if (direcoes->valorAtual() == "right" && (carros->valorAtual() + preenchimento_balsa) > tamanho_balsa){ // Se o carro não couber, a balsa preencheu e atravessa
+                else if (direcoes->valorAtual() == "right" && (carros->valorAtual() + preenchimento_balsa) > tamanho_balsa){ // Se o carro não couber, a balsa preencheu e atravessa
                     preenchimento_balsa = 0;  // Balsa foi "descarregada" ao ir pro outro lado
                     qtd_atravessadas++;
                     lado_balsa = "left";
