@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 // Classe abstrata para lista
@@ -162,42 +161,48 @@ class ListaLigada : public Lista<E> {
 int main(){
     int quantidade_pessoas;
     int tempo_pessoas;
-    ListaLigada<int> fila_original;
-    ListaLigada<int> fila_ordenada;
+
+    // Ponteiros do tipo Lista (pai), instanciando a classe ListaLigada (filha)
+    Lista<int>* fila_original = new ListaLigada<int>();
+    Lista<int>* fila_ordenada = new ListaLigada<int>();
 
     cin >> quantidade_pessoas; // Recebe a quantidade de pessoas na fila
 
     for (int i = 0; i < quantidade_pessoas; i++){ // Recebe tempo de cada pessoa e coloca na lista ligada
         cin >> tempo_pessoas;
-        fila_original.inserirFim(tempo_pessoas);
+        fila_original->inserirFim(tempo_pessoas);
     };
 
     // Ordena fila pra ter o mínimo de pessoas desapontadas
-    while (fila_original.tamanho() > 0){
-        int menor_tempo = fila_original.pegarValor();
-        fila_original.proximo();
+    while (fila_original->tamanho() > 0){
+        int menor_tempo = fila_original->pegarValor();
+        fila_original->proximo();
 
-        for (int i = 0; i < fila_original.tamanho(); i++){
-            if (fila_original.pegarValor() < menor_tempo){
-                menor_tempo = fila_original.pegarValor();
+        for (int i = 0; i < fila_original->tamanho(); i++){
+            if (fila_original->pegarValor() < menor_tempo){
+                menor_tempo = fila_original->pegarValor();
             };
-            fila_original.proximo();
+            fila_original->proximo();
         };
 
-        fila_ordenada.inserirFim(menor_tempo);
-        fila_original.remover(menor_tempo);
+        fila_ordenada->inserirFim(menor_tempo);
+        fila_original->remover(menor_tempo);
     };
 
     // Calcula quantas pessoas não ficaram desapontadas 
-    long long soma_tempos = fila_ordenada.pegarValor();
+    long long soma_tempos = fila_ordenada->pegarValor();
     int nao_desapontados = 1;
     for (int i = 1; i < quantidade_pessoas; i++){
-        fila_ordenada.proximo();
-        if (soma_tempos <= fila_ordenada.pegarValor()){
+        fila_ordenada->proximo();
+        if (soma_tempos <= fila_ordenada->pegarValor()){
             nao_desapontados++;
         };
-        soma_tempos += fila_ordenada.pegarValor();
+        soma_tempos += fila_ordenada->pegarValor();
     };
 
     cout << nao_desapontados << endl;
+
+    delete fila_original;
+    delete fila_ordenada;
+    return 0;
 };
