@@ -47,7 +47,8 @@ class ListaLigada : public Lista<E> {
         // Metodo pra inicializar a lista
         void init() {
             cabeca = new No(E(), nullptr); // Cria o no sentinela/dummy
-            cauda = cabeca = atual;  // No inicio, cabeca, cauda e cursor sao o mesmo
+            cauda = cabeca;  // No inicio, cabeca, cauda e cursor sao o mesmo
+            atual = cabeca;
             tamanhoLista = 0;
         }
 
@@ -176,8 +177,8 @@ int main(){
         fila_ordenada->proximo();
         if (soma_tempos <= fila_ordenada->pegarValor()){
             nao_desapontados++;
-        };
-        soma_tempos += fila_ordenada->pegarValor();
+            soma_tempos += fila_ordenada->pegarValor();  // Só soma o tempo se a pessoa nao ficou desapontada
+        };    
     };
 
     cout << nao_desapontados << endl;
