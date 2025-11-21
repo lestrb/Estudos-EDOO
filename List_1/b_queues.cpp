@@ -189,7 +189,7 @@ int main(){
     };
 
     // Calcula quantas pessoas não ficaram desapontadas 
-    int soma_tempos = fila_ordenada.pegarValor();
+    long long soma_tempos = fila_ordenada.pegarValor();
     int nao_desapontados = 1;
     for (int i = 1; i < quantidade_pessoas; i++){
         fila_ordenada.proximo();
