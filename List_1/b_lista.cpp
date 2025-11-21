@@ -194,30 +194,30 @@ int main(){
     int tempo_pessoas;
 
     // Ponteiro do tipo Lista (pai), instanciando a classe ListaLigada
-    Lista<int>* fila = new ListaLigada<int>();
+    Lista<int>* lista_tempos = new ListaLigada<int>();
 
-    cin >> quantidade_pessoas; // Recebe a quantidade de pessoas na fila
+    cin >> quantidade_pessoas; // Recebe a quantidade de pessoas
 
     for (int i = 0; i < quantidade_pessoas; i++){ // Recebe tempo de cada pessoa e coloca na lista ligada
         cin >> tempo_pessoas;
-        fila->inserirFim(tempo_pessoas);
+        lista_tempos->inserirFim(tempo_pessoas);
     };
 
-    fila->ordenar(); // Ordena a fila pelo tempo de atendimento
+    lista_tempos->ordenar(); // Ordena a lista_tempos pelo tempo de atendimento
 
     // Calcula quantas pessoas nao ficaram desapontadas 
-    long long soma_tempos = fila->pegarValor();
+    long long soma_tempos = lista_tempos->pegarValor();
     int nao_desapontados = 1;
     for (int i = 1; i < quantidade_pessoas; i++){
-        fila->proximo();
-        if (soma_tempos <= fila->pegarValor()){
+        lista_tempos->proximo();
+        if (soma_tempos <= lista_tempos->pegarValor()){
             nao_desapontados++;
-            soma_tempos += fila->pegarValor();  // Só soma o tempo se a pessoa nao ficou desapontada
+            soma_tempos += lista_tempos->pegarValor();  // Só soma o tempo se a pessoa nao ficou desapontada
         };    
     };
 
     cout << nao_desapontados << endl;
 
-    delete fila;
+    delete lista_tempos;
     return 0;
 };
