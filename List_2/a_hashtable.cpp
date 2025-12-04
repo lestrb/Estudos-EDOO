@@ -71,11 +71,8 @@ class HashFechado : public TabelaHash<E> {
                     posicao_atual = (valor_hash + (j * j) + (23 * j)) % 101;
                 }
 
-                // Se "LIVRE", a chave nao ta na tabela
-                if (this->tabela[posicao_atual] == "LIVRE") {
-                    return -1;
-                }
-                else if (this->tabela[posicao_atual] == chave) { // Encontrou
+                // Checa nas 20 tentativas
+                if (this->tabela[posicao_atual] == chave) { // Encontrou
                     return posicao_atual;
                 }
                 
